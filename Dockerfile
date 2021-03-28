@@ -27,6 +27,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted univer
 # extra dependencies (over what buildpack-deps already includes)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libbluetooth-dev \
+    cron supervisor libxml2-dev \
     software-properties-common \
     wget \
     vim \
@@ -44,8 +45,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip config set global.index-url http://mirrors.aliyun.com/pypi/simple \
   && pip config set global.trusted-host mirrors.aliyun.com
 
+# 安装python必要的库
+RUN pip install requests Flask
+
 # echo  "[global]\n\
 # trusted-host=mirrors.aliyun.com\n\
 # index-url=http://mirrors.aliyun.com/pypi/simple" > /root/.config/pip/pip.conf && \
 
-ENTRYPOINT  ["/bin/bash"]
+# ENTRYPOINT  ["/bin/bash"]
+ENTRYPOINT ["supervisord","-n","-c","/data/workspace/supervisor/supervisord.conf"]
