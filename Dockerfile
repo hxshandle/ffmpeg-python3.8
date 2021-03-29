@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tk-dev \
     uuid-dev \
   && add-apt-repository ppa:deadsnakes/ppa \
-  && apt-get install -y python3.8 python3-pip \
+  && apt-get install -y python3.8 python3-pip python3-dev \
   && rm -rf /var/lib/apt/lists/* \
   && ln -s /usr/bin/python3 /usr/bin/python \
   && ln -s /usr/bin/pip3  /usr/bin/pip
@@ -46,7 +46,7 @@ RUN pip config set global.index-url http://mirrors.aliyun.com/pypi/simple \
   && pip config set global.trusted-host mirrors.aliyun.com
 
 # 安装python必要的库
-RUN pip install requests Flask
+RUN pip install requests Flask python-dotenv aliyun-python-sdk-core oss2 aliyun-python-sdk-multimediaai
 
 # echo  "[global]\n\
 # trusted-host=mirrors.aliyun.com\n\
